@@ -1,5 +1,5 @@
-import Protolude
+import           Protolude
 import qualified Seyler
 
 main :: IO ()
-main = Seyler.main
+main = putStrLn ("anan" :: Text)

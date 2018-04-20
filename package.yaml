@@ -32,6 +32,7 @@ dependencies:
 library:
   dependencies:
   - base
+  - text
   source-dirs: library
 
 executables:
