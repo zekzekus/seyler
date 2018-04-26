@@ -1,4 +1,8 @@
-module Seyler where
+module Seyler
+    ( toCommandURL
+    , Action(..)
+    , Command(..)
+    ) where
 
 import           Lib.Prelude
 
