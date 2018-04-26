@@ -18,7 +18,7 @@ main = do
 
 spec :: Spec
 spec =
-    parallel $ do
+    parallel $
         it "command to string" $ do
             toCommandURL (Command Add [("a", "b")]) `shouldBe`
                 "things:///add?a=b"
