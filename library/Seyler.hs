@@ -1,5 +1,6 @@
 module Seyler
     ( toCommandURL
+    , toCommand
     , Action(..)
     , Command(..)
     ) where
@@ -43,3 +44,7 @@ toCommandURL (Command act params) =
     toKebab "AddProject"    = "add-project"
     toKebab "UpdateProject" = "update-project"
     toKebab a               = T.toLower a
+
+toCommand :: Command -> Text
+toCommand cmd = open <> toCommandURL cmd
+  where open = "open " :: Text

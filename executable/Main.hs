@@ -1,5 +1,25 @@
+import qualified Data.Text      as T
 import           Protolude
-import qualified Seyler
+import           System.Exit    (ExitCode (..), exitWith)
+import           System.IO      (hGetContents)
+import           System.Process (CreateProcess (..), StdStream (CreatePipe),
+                                 createProcess, shell, waitForProcess)
+
+import           Seyler
 
 main :: IO ()
-main = putStrLn ("anan" :: Text)
+main = do
+    let cmd = Command Add [("title", "thisismyfirst")]
+    _ <- runCommand $ toCommand cmd
+    putStrLn ("Done!" :: Text)
+
+runCommand :: Text -> IO [Text]
+runCommand cmd = do
+    (_, Just stdOut, _, ph) <-
+        createProcess (shell (T.unpack cmd)) {std_out = CreatePipe}
+    exit <- waitForProcess ph
+    case exit of
+        ExitSuccess -> do 
+            result <- hGetContents stdOut
+            return (T.splitOn ("\n" :: Text) (T.pack result))
+        ExitFailure code -> exitWith (ExitFailure code)

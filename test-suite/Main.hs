@@ -18,8 +18,8 @@ main = do
 
 spec :: Spec
 spec =
-    parallel $
-        it "command to string" $ do
+    parallel $ do
+        it "command to url" $ do
             toCommandURL (Command Add [("a", "b")]) `shouldBe`
                 "things:///add?a=b"
             toCommandURL (Command Update [("a", "b"), ("c", "d")]) `shouldBe`
@@ -27,3 +27,8 @@ spec =
             toCommandURL (Command Add []) `shouldBe` "things:///add?"
             toCommandURL (Command AddProject [("a", "b"), ("c", "d")]) `shouldBe`
                 "things:///add-project?a=b&c=d"
+        it "command to command to run" $ do
+            toCommand (Command Add [("a", "b")]) `shouldBe`
+                "open things:///add?a=b"
+            toCommand (Command AddProject [("a", "b"), ("c", "d")]) `shouldBe`
+                "open things:///add-project?a=b&c=d"

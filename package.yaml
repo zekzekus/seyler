@@ -28,11 +28,11 @@ default-extensions:  OverloadedStrings, NoImplicitPrelude
 
 dependencies:
   - protolude
+  - text
 
 library:
   dependencies:
   - base
-  - text
   source-dirs: library
 
 executables:
@@ -42,6 +42,7 @@ executables:
     dependencies:
     - base
     - seyler
+    - process
     ghc-options:
     - -rtsopts
     - -threaded
