@@ -19,7 +19,5 @@ runCommand cmd = do
         createProcess (shell (T.unpack cmd)) {std_out = CreatePipe}
     exit <- waitForProcess ph
     case exit of
-        ExitSuccess -> do 
-            result <- hGetContents stdOut
-            return (T.splitOn ("\n" :: Text) (T.pack result))
+        ExitSuccess -> T.splitOn ("\n" :: Text) . T.pack <$> hGetContents stdOut
         ExitFailure code -> exitWith (ExitFailure code)
