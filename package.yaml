@@ -27,12 +27,11 @@ ghc-options:
 default-extensions:  OverloadedStrings, NoImplicitPrelude
 
 dependencies:
+  - base
   - protolude
   - text
 
 library:
-  dependencies:
-  - base
   source-dirs: library
 
 executables:
@@ -40,7 +39,6 @@ executables:
     source-dirs: executable
     main: Main.hs
     dependencies:
-    - base
     - seyler
     - process
     ghc-options:
@@ -53,7 +51,6 @@ tests:
     source-dirs: test-suite
     main: Main.hs
     dependencies:
-    - base
     - seyler
     - tasty
     - tasty-hspec
