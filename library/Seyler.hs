@@ -39,12 +39,13 @@ toCommandURL (Command act params) =
     partAction = (toKebab . show) act
     partParameters = T.intercalate "&" $ toArg <$> params
     toArg (k, v) = k <> "=" <> v
-    protocol = "things:///" :: Text
-    firstParamSeparator = "?" :: Text
+    protocol = "things:///"
+    firstParamSeparator = "?"
     toKebab "AddProject"    = "add-project"
     toKebab "UpdateProject" = "update-project"
     toKebab a               = T.toLower a
 
 toCommand :: Command -> Text
 toCommand cmd = open <> toCommandURL cmd
-  where open = "open " :: Text
+  where
+    open = "open " :: Text
