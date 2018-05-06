@@ -7,7 +7,8 @@ module Seyler
 
 import           Lib.Prelude
 
-import qualified Data.Text   as T
+import qualified Data.Text          as T
+import           Network.URI.Encode (encodeText)
 
 type Key = Text
 
@@ -38,7 +39,7 @@ toCommandURL (Command act params) =
   where
     partAction = (toKebab . show) act
     partParameters = T.intercalate "&" $ toArg <$> params
-    toArg (k, v) = k <> "=" <> v
+    toArg (k, v) = k <> "=" <> encodeText v
     protocol = "things:///"
     firstParamSeparator = "?"
     toKebab "AddProject"    = "add-project"

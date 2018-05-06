@@ -9,7 +9,7 @@ import           Seyler
 
 main :: IO ()
 main = do
-    let cmd = Command Add [("title", "thisismyfirst")]
+    let cmd = Command Add [("title", "thisis myfirst")]
     _ <- runCommand $ toCommand cmd
     putStrLn ("Done!" :: Text)
 

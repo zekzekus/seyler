@@ -22,6 +22,8 @@ spec =
         it "command to url" $ do
             toCommandURL (Command Add [("a", "b")]) `shouldBe`
                 "things:///add?a=b"
+            toCommandURL (Command Add [("a", "b b b")]) `shouldBe`
+                "things:///add?a=b%20b%20b"
             toCommandURL (Command Update [("a", "b"), ("c", "d")]) `shouldBe`
                 "things:///update?a=b&c=d"
             toCommandURL (Command Add []) `shouldBe` "things:///add?"
