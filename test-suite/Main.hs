@@ -19,15 +19,18 @@ main = do
 spec :: Spec
 spec = parallel $ do
     it "command to url" $ do
-        toCommandURL (Command Add [("a", "b")]) `shouldBe` "things:///add?a=b"
-        toCommandURL (Command Add [("a", "b b b")])
-            `shouldBe` "things:///add?a=b%20b%20b"
-        toCommandURL (Command Update [("a", "b"), ("c", "d")])
-            `shouldBe` "things:///update?a=b&c=d"
-        toCommandURL (Command Add []) `shouldBe` "things:///add?"
-        toCommandURL (Command AddProject [("a", "b"), ("c", "d")])
-            `shouldBe` "things:///add-project?a=b&c=d"
+        shouldBe (toCommandURL (Command Add [("a", "b")]))
+                 "things:///add?a=b"
+        shouldBe (toCommandURL (Command Add [("a", "b b b")]))
+                 "things:///add?a=b%20b%20b"
+        shouldBe (toCommandURL (Command Update [("a", "b"), ("c", "d")]))
+                 "things:///update?a=b&c=d"
+        shouldBe (toCommandURL (Command Add []))
+                 "things:///add?"
+        shouldBe (toCommandURL (Command AddProject [("a", "b"), ("c", "d")]))
+                 "things:///add-project?a=b&c=d"
     it "command to command to run" $ do
-        toCommand (Command Add [("a", "b")]) `shouldBe` "open things:///add?a=b"
-        toCommand (Command AddProject [("a", "b"), ("c", "d")])
-            `shouldBe` "open things:///add-project?a=b&c=d"
+        shouldBe (toCommand (Command Add [("a", "b")]))
+                 "open things:///add?a=b"
+        shouldBe (toCommand (Command AddProject [("a", "b"), ("c", "d")]))
+                 "open things:///add-project?a=b&c=d"
