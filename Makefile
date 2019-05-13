@@ -1,10 +1,10 @@
-ghcid:
-	ghcid --command="stack ghci seyler:lib seyler:test:seyler-test-suite" --test="main"
+test:
+	stack build --fast --haddock-deps --test
 
 build:
 	stack build --fast --haddock-deps
 
-test:
-	stack build --fast --haddock-deps --test
+ghcid:
+	ghcid --command="stack ghci seyler:lib seyler:test:seyler-test-suite" --test="main"
 
 .PHONY:	ghcid build test

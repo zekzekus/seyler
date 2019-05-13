@@ -1,14 +1,15 @@
 module Seyler
-    ( toCommandURL
-    , toCommand
-    , Action(..)
-    , Command(..)
-    ) where
+  ( toCommandURL
+  , toCommand
+  , Action(..)
+  , Command(..)
+  )
+where
 
 import           Lib.Prelude
 
-import qualified Data.Text          as T
-import           Network.URI.Encode (encodeText)
+import qualified Data.Text                     as T
+import           Network.URI.Encode             ( encodeText )
 
 type Key = Text
 
@@ -35,16 +36,16 @@ data Command = Command
 
 toCommandURL :: Command -> Text
 toCommandURL (Command act params) =
-    protocol <> partAction <> firstParamSeparator <> partParameters
-  where
-    partAction     = (toKebab . show) act
-    partParameters = T.intercalate "&" $ toArg <$> params
-    toArg (k, v) = k <> "=" <> encodeText v
-    protocol            = "things:///"
-    firstParamSeparator = "?"
-    toKebab "AddProject"    = "add-project"
-    toKebab "UpdateProject" = "update-project"
-    toKebab a               = T.toLower a
+  protocol <> partAction <> firstParamSeparator <> partParameters
+ where
+  partAction     = (toKebab . show) act
+  partParameters = T.intercalate "&" $ toArg <$> params
+  toArg (k, v) = k <> "=" <> encodeText v
+  protocol            = "things:///"
+  firstParamSeparator = "?"
+  toKebab "AddProject"    = "add-project"
+  toKebab "UpdateProject" = "update-project"
+  toKebab a               = T.toLower a
 
 toCommand :: Command -> Text
 toCommand cmd = open <> toCommandURL cmd where open = "open " :: Text
