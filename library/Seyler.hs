@@ -30,8 +30,8 @@ data Action
     deriving (Show)
 
 data Command = Command
-    { action     :: Action
-    , parameters :: ParameterList
+    { action     :: !Action
+    , parameters :: !ParameterList
     } deriving (Show)
 
 toCommandURL :: Command -> Text
