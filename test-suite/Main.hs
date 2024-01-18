@@ -7,6 +7,7 @@ import qualified Test.Tasty
 
 -- Hspec is one of the providers for Tasty. It provides a nice syntax for
 -- writing tests. Its website has more info: <https://hspec.github.io>.
+import          Test.Hspec
 import           Test.Tasty.Hspec
 
 import           Seyler

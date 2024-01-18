@@ -54,6 +54,7 @@ tests:
     dependencies:
     - seyler
     - tasty
+    - hspec
     - tasty-hspec
     ghc-options:
     - -rtsopts
