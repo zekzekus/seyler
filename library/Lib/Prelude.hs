@@ -5,8 +5,8 @@ For more info on what is exported by Protolude check:
 https://github.com/sdiehl/protolude/blob/master/Symbols.md
 -}
 module Lib.Prelude
-  ( module Exports
+  ( module Exports,
   )
 where
 
-import           Protolude                     as Exports
+import Protolude as Exports
