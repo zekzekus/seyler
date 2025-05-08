@@ -1,37 +1,108 @@
 {
-  # inspired by: https://serokell.io/blog/practical-nix-flakes#packaging-existing-applications
-  description = "A Hello World in Haskell with a dependency and a devShell";
-  inputs.nixpkgs.url = "nixpkgs";
-  outputs = { self, nixpkgs }:
-    let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-      nixpkgsFor = forAllSystems (system: import nixpkgs {
-        inherit system;
-        overlays = [ self.overlay ];
-      });
-    in
-    {
-      overlay = (final: prev: {
-        seyler = final.haskellPackages.callCabal2nix "seyler" ./. {};
-      });
-      packages = forAllSystems (system: {
-         seyler = nixpkgsFor.${system}.seyler;
-      });
-      defaultPackage = forAllSystems (system: self.packages.${system}.seyler);
-      checks = self.packages;
-      devShell = forAllSystems (system: let haskellPackages = nixpkgsFor.${system}.haskellPackages;
-        in haskellPackages.shellFor {
-          packages = p: [self.packages.${system}.seyler];
-          withHoogle = true;
-          buildInputs = with haskellPackages; [
-            stack
-            haskell-language-server
-            ghcid
-            cabal-install
+  description = "A Haskell project";
+  inputs.hix.url = "github:tek/hix?ref=0.9.1";
+  outputs = {hix, ...}: hix.lib.flake {
+    packages = {
+      seyler = {
+        src = ./.;
+        description = "Command line interface for Things productivitiy app";
+        cabal = {
+          author = "Zekeriya Koc";
+          build-type = "Simple";
+          copyright = "2025 Zekeriya Koc";
+          license = "MIT";
+          version = "0.0.0";
+          meta = {
+            maintainer = "Zekeriya Koc";
+            homepage = "https://github.com/zekzekus/seyler#readme";
+            synopsis = "Command line interface for Things productivitiy app";
+          };
+        };
+        library = {
+          enable = true;
+          dependencies = [
+            "process"
+            "protolude"
+            "text"
+            "uri-encode"
           ];
-        # Change the prompt to show that you are in a devShell
-        shellHook = "export PS1='\\e[1;34mdev > \\e[0m'";
-        });
+          default-extensions = [
+            "OverloadedStrings"
+            "NoImplicitPrelude"
+          ];
+          source-dirs = "library";
+          language = "Haskell2010";
+          ghc-options = [
+            "-Wall"
+            "-Wcompat"
+            "-Wincomplete-record-updates"
+            "-Wincomplete-uni-patterns"
+            "-Wredundant-constraints"
+          ];
+          component = {
+            other-modules = [
+              "Paths_seyler"
+            ];
+          };
+        };
+        executables.seyler = {
+          dependencies = [
+            "process"
+            "protolude"
+            "seyler"
+            "text"
+            "uri-encode"
+          ];
+          default-extensions = [
+            "OverloadedStrings"
+            "NoImplicitPrelude"
+          ];
+          source-dirs = "executable";
+          language = "Haskell2010";
+          ghc-options = [
+            "-Wall"
+            "-Wcompat"
+            "-Wincomplete-record-updates"
+            "-Wincomplete-uni-patterns"
+            "-Wredundant-constraints"
+          ];
+          component = {
+            other-modules = [
+              "Paths_seyler"
+            ];
+          };
+        };
+        tests.seyler-test-suite = {
+          dependencies = [
+            "hspec"
+            "process"
+            "protolude"
+            "seyler"
+            "tasty"
+            "tasty-hspec"
+            "text"
+            "uri-encode"
+          ];
+          default-extensions = [
+            "OverloadedStrings"
+            "NoImplicitPrelude"
+          ];
+          source-dirs = "test-suite";
+          language = "Haskell2010";
+          ghc-options = [
+            "-Wall"
+            "-Wcompat"
+            "-Wincomplete-record-updates"
+            "-Wincomplete-uni-patterns"
+            "-Wredundant-constraints"
+          ];
+          component = {
+            other-modules = [
+              "Paths_seyler"
+            ];
+          };
+        };
+      };
+    };
   };
 }
