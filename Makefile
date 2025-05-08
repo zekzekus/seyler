@@ -1,10 +1,7 @@
 test:
-	stack build --fast --haddock-deps --test
+	nix run .#ghcid -- -c seyler-test-suite
 
 build:
-	stack build --fast --haddock-deps
+	nix build
 
-ghcid:
-	ghcid --command="stack ghci seyler:lib seyler:test:seyler-test-suite" --test="main"
-
-.PHONY:	ghcid build test
+.PHONY:	build test
