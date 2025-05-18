@@ -4,7 +4,7 @@
   outputs = {hix, ...}: hix.lib.flake {
     packages = {
       seyler = {
-        src = ./.;
+        src = builtins.path { path = ./.; name = "source"; };
         description = "Command line interface for Things productivitiy app";
         cabal = {
           author = "Zekeriya Koc";
